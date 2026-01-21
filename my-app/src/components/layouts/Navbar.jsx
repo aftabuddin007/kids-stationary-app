@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import Logo from './Logo';
+import { TbLogin2 } from "react-icons/tb";
+import { FaCartPlus } from "react-icons/fa";
+
 
 const Navbar = () => {
 const pathname = usePathname();
@@ -48,10 +51,15 @@ const pathname = usePathname();
                 Products
               </Link>
             </li>
+            <li>
+              <Link href="/blog" className={navLinkClass('/products')}>
+                Blog
+              </Link>
+            </li>
             
              <li>
-              <Link href="/addProduct" className={navLinkClass('/addProduct')}>
-               Add Product
+              <Link href="/contact" className={navLinkClass('/addProduct')}>
+               Contact
               </Link>
             </li>
 
@@ -73,10 +81,15 @@ const pathname = usePathname();
               Products
             </Link>
           </li>
+          <li>
+            <Link href="/blog" className={navLinkClass('/products')}>
+              Blog
+            </Link>
+          </li>
           
              <li>
-              <Link href="/addProduct" className={navLinkClass('/addProduct')}>
-               Add Product
+              <Link href="/contact" className={navLinkClass('/addProduct')}>
+               Contact
               </Link>
             </li>
 
@@ -85,9 +98,9 @@ const pathname = usePathname();
       </div>
 
       {/* Right */}
-      <div className="navbar-end">
-        
-      <button className="btn btn-primary">Login</button>
+      <div className="navbar-end flex gap-4">
+        <Link href={'/cart'} className='btn'><FaCartPlus />   </Link>
+      <Link href={'/login'}  className="btn btn-primary btn-outline"><TbLogin2 /> Login</Link>
        
       </div>
     </div>

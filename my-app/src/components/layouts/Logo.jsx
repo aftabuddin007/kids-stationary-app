@@ -4,7 +4,7 @@ import React from 'react';
 
 const Logo = () => {
     return (
-        <Link href={'/'}className='flex items-center'>
+        <Link href={'/'}className='flex items-center gap-2'>
             <Image alt='logo-kids' src={'/assets/logo.png'} height={40} width={50}>
 
             </Image>
