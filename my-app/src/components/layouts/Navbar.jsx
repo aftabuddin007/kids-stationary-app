@@ -99,7 +99,7 @@ const pathname = usePathname();
 
       {/* Right */}
       <div className="navbar-end flex gap-4">
-        <Link href={'/cart'} className='btn'><FaCartPlus />   </Link>
+        <Link href={'/cart'} className='btn btn-primary'><FaCartPlus />   </Link>
       <Link href={'/login'}  className="btn btn-primary btn-outline"><TbLogin2 /> Login</Link>
        
       </div>
