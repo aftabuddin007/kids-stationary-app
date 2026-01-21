@@ -11,32 +11,33 @@ import "swiper/css/effect-fade";
 
 
 const Banner = () => {
-  const heroSlides = [
+ const heroSlides = [
   {
-    title: "Premium Sports Kits for Champions",
+    title: "Fun Toys for Happy Kids",
     description:
-      "Discover high-quality jerseys, boots, and training gear designed for peak performance.",
-    image: "https://images.pexels.com/photos/3621104/pexels-photo-3621104.jpeg",
-    button: "Shop Now",
-    gradient: "from-black/50 to-black/80",
+      "Explore colorful toys that spark imagination, creativity, and endless smiles.",
+    image: "https://i.ibb.co.com/S4tZTj21/pexels-mohit-suthar-1271363-7634510.jpg",
+    button: "Shop Toys",
+    gradient: "from-pink-500/40 to-purple-700/70",
   },
   {
-    title: "Train Hard. Play Strong.",
+    title: "Cute & Creative Stationery",
     description:
-      "From football to cricket, get professional sports kits trusted by athletes.",
-    image: "https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg",
-    button: "Explore Kits",
-    gradient: "from-emerald-900/50 to-black/80",
+      "From pencils to notebooks, make learning fun with adorable stationery items.",
+    image: "https://i.ibb.co.com/p8WRWcY/pexels-yun-zhu-2157767250-34977218.jpg",
+    button: "Explore Stationery",
+    gradient: "from-sky-500/40 to-indigo-700/70",
   },
   {
-    title: "Gear Up for Victory",
+    title: "Play, Learn & Smile",
     description:
-      "Upgrade your game with durable, stylish, and affordable sports equipment.",
-    image: "https://images.pexels.com/photos/163403/football-american-football-rugby-ball-163403.jpeg",
+      "Safe, educational, and playful products your kids will absolutely love.",
+    image: "https://i.ibb.co.com/d8rXh6h/pexels-storiesofdesign-15130364.jpg",
     button: "View Collection",
-    gradient: "from-indigo-900/50 to-black/80",
+    gradient: "from-yellow-400/40 to-orange-600/70",
   },
-];
+]
+;
 
   const scrollToNextSection = () => {
     const nextSection = document.getElementById('next-section');
