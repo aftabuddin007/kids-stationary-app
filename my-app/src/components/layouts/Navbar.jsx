@@ -52,13 +52,13 @@ const pathname = usePathname();
               </Link>
             </li>
             <li>
-              <Link href="/blog" className={navLinkClass('/products')}>
+              <Link href="/blog" className={navLinkClass('/blog')}>
                 Blog
               </Link>
             </li>
             
              <li>
-              <Link href="/contact" className={navLinkClass('/addProduct')}>
+              <Link href="/contact" className={navLinkClass('/contact')}>
                Contact
               </Link>
             </li>
@@ -82,13 +82,13 @@ const pathname = usePathname();
             </Link>
           </li>
           <li>
-            <Link href="/blog" className={navLinkClass('/products')}>
+            <Link href="/blog" className={navLinkClass('/blog')}>
               Blog
             </Link>
           </li>
           
              <li>
-              <Link href="/contact" className={navLinkClass('/addProduct')}>
+              <Link href="/contact" className={navLinkClass('/contact')}>
                Contact
               </Link>
             </li>

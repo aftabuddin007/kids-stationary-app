@@ -12,7 +12,9 @@ const ProductCard = ({ product }) => {
     <div className="card bg-base-100 w-full shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-base-200">
       {/* Image Section */}
       <figure className="relative h-64 w-full bg-gray-100 overflow-hidden group">
-        <img
+        <Image
+            width={200}
+            height={200}
           src={image}
           alt={title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
