@@ -1,6 +1,77 @@
 import { getSingleProduct } from '@/actins/server/product';
 import { FaWhatsapp, FaStar, FaShieldAlt, FaTruck, FaUndo, FaCheckCircle, FaShoppingCart, FaBolt } from 'react-icons/fa';
 import { notFound } from 'next/navigation';
+import CartButton from '@/components/buttons/CartButton';
+
+
+
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = await getSingleProduct(id);
+
+  // Fallback for missing products
+  if (!product || Object.keys(product).length === 0) {
+    return {
+      title: "Product Not Found | Hero Kidz",
+      description: "The product you are looking for is unavailable.",
+    };
+  }
+
+  // Calculate the actual price for the description
+  const discountedPrice = Math.round(product.price - (product.price * product.discount) / 100);
+
+  return {
+    title: product.title,
+    description: `${product.bangla ? product.bangla + ' - ' : ''}${product.description?.substring(0, 150)}...`,
+    
+    // OpenGraph (Facebook, WhatsApp, LinkedIn)
+    openGraph: {
+      title: `${product.title} | Kids Stationary`,
+      description: `Price: ৳${discountedPrice}. ${product.description?.substring(0, 100)}`,
+      url: `https://kids-stationary.vercel.app/products/${id}`,
+      siteName: "Kids Stationary",
+      images: [
+        {
+          url: product.image, // The actual product image
+          width: 1200,
+          height: 630,
+          alt: product.title,
+        },
+      ],
+      type: "article",
+    },
+
+    // Twitter (X)
+    twitter: {
+      card: "summary_large_image",
+      title: product.title,
+      description: `Buy ${product.title} at Kids Stationary for ৳${discountedPrice}`,
+      images: [product.image],
+    },
+  };
+}
+
+// Your existing ProductDetails component follows...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default async function ProductDetails({ params }) {
   const { id } = await params;
@@ -82,9 +153,7 @@ export default async function ProductDetails({ params }) {
 
             {/* CTA Buttons - Professional High-Contrast UI */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <button className="btn btn-warning btn-lg gap-2 text-slate-900 font-bold border-none hover:bg-yellow-500">
-                <FaShoppingCart className="text-xl" /> Add to Cart
-              </button>
+              <CartButton product={product}></CartButton>
               <button className="btn btn-primary btn-lg gap-2 bg-orange-600 border-none hover:bg-orange-700 text-white font-bold">
                 <FaBolt className="text-xl" /> Buy Now
               </button>
