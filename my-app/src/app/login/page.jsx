@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc'; // Import Google Icon
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
   const router = useRouter()
@@ -25,9 +26,11 @@ export default function LoginPage() {
       redirect:false})
     
     if(result?.ok) {
+      Swal.fire("Login", "", "successful")
 router.push('/')
-  alert("Login successful");
 
+    }else{
+      Swal.fire("error","Email password not matched ","error")
     }
    
   
