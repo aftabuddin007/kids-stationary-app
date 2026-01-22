@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc'; // Import Google Icon
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -23,7 +25,9 @@ export default function LoginPage() {
       redirect:false})
     
     if(result?.ok) {
+router.push('/')
   alert("Login successful");
+
     }
    
   
