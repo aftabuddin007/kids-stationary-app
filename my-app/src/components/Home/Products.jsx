@@ -1,7 +1,12 @@
 import React from 'react';
-import products from '@/components/layouts/data/toys.json'
+// import products from '@/components/layouts/data/toys.json'
 import ProductCard from '../Card/ProductCard';
-const Products = () => {
+import { getProducts } from '@/actins/server/product';
+const Products = async () => {
+
+const products = (await getProducts())|| []
+// console.log(products)
+
     return (
         <div className='max-w-6xl mx-auto'>
             <h2 className="font-bold text-center text-4xl mb-10">Our Products</h2>

@@ -1,9 +1,10 @@
 import React from 'react';
 import Image from 'next/image'; // Optional: Use standard <img> if domains aren't configured
 import { FaStar, FaShoppingCart, FaRegHeart } from 'react-icons/fa';
+import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
-  const { title, image, price, discount, ratings, reviews, sold } = product;
+  const { title,_id, image, price, discount, ratings, reviews, sold } = product;
 
   // Calculate Discounted Price
   const discountedPrice = Math.round(price - (price * discount) / 100);
@@ -59,9 +60,9 @@ const ProductCard = ({ product }) => {
 
         {/* Action Buttons */}
         <div className="card-actions justify-end mt-4">
-          <button className="btn btn-primary btn-sm w-full flex items-center gap-2 text-white shadow-md hover:scale-105 transition-transform">
-            <FaShoppingCart /> Add to Cart
-          </button>
+          <Link href={`/products/${_id}`} className="btn btn-primary btn-sm w-full flex items-center gap-2 text-white shadow-md hover:scale-105 transition-transform">
+            <FaShoppingCart /> View Details
+          </Link>
         </div>
       </div>
     </div>
