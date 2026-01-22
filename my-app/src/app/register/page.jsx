@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight, FaMapMarkerAlt, FaCity, FaMapPin } from 'react-icons/fa';
+import { postUser } from '@/actins/server/auth';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
+    const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -15,13 +18,19 @@ export default function RegisterPage() {
     confirmPassword: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if(formData.password !== formData.confirmPassword) {
         alert("Passwords do not match!");
         return;
     }
-    console.log("Registration Data:", formData);
+    // console.log("Registration Data:", formData);
+    const result = await postUser(formData)
+    if(result.acknowledged){
+        alert("success")
+        router.push('/login')
+
+    }
   };
 
   return (
