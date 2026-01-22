@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react"
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight } from 'react-icons/fa';
@@ -12,9 +13,23 @@ export default function LoginPage() {
     password: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Login Attempt:", formData);
+    // console.log("Login Attempt:", formData);
+    try{
+ const result = await signIn("credentials",{email:formData.email,
+      password:formData.password,
+      name:formData.name,
+      redirect:false})
+    
+    if(result?.ok) {
+  alert("Login successful");
+    }
+   
+  
+} catch(error) {
+  console.log(error);
+}
   };
 
   const handleGoogleSignIn = () => {
