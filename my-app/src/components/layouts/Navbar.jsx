@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import Logo from './Logo';
-import { TbLogin2 } from "react-icons/tb";
 import { FaCartPlus } from "react-icons/fa";
+import AuthButton from '../buttons/AuthButton';
 
 
 const Navbar = () => {
@@ -100,7 +100,7 @@ const pathname = usePathname();
       {/* Right */}
       <div className="navbar-end flex gap-4">
         <Link href={'/cart'} className='btn btn-primary'><FaCartPlus />   </Link>
-      <Link href={'/login'}  className="btn btn-primary btn-outline"><TbLogin2 /> Login</Link>
+     <AuthButton></AuthButton>
        
       </div>
     </div>
