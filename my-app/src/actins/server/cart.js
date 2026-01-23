@@ -7,7 +7,9 @@ const { dbConnect, collections } = require("@/lib/dbConnect")
 
 const cartCollection = dbConnect(collections.CART)
 export const handleCart = async({product,inc = true})=>{
-    const user = await getServerSession(authOptions) || {}
+    const session = await getServerSession(authOptions)
+const user = session?.user;
+    console.log(user)
     if(!user)return {success:false}
 
 // getcart item
