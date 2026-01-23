@@ -4,10 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc'; // Import Google Icon
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 
 export default function LoginPage() {
+  const params = useSearchParams();
+  const callback = params.get('callbackUrl') || '/'
+
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,11 +26,13 @@ export default function LoginPage() {
  const result = await signIn("credentials",{email:formData.email,
       password:formData.password,
       name:formData.name,
-      redirect:false})
+      // redirect:false,
+    callbackUrl:params.get('callbackUrl') || '/'
+    })
     
     if(result?.ok) {
       Swal.fire("Login", "", "successful")
-router.push('/')
+
 
     }else{
       Swal.fire("error","Email password not matched ","error")
@@ -151,7 +156,7 @@ router.push('/')
           <div className="text-center mt-8">
             <p className="text-slate-500 text-sm">
               Don't have an account? {' '}
-              <Link href="/register" className="text-primary font-bold hover:underline">
+              <Link href={`/register?callbackUrl=${callback}`} className="text-primary font-bold hover:underline">
                 Sign Up Now
               </Link>
             </p>
