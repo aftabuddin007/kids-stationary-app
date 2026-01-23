@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight, FaMapMarkerAlt, FaCity, FaMapPin } from 'react-icons/fa';
 import { postUser } from '@/actins/server/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function RegisterPage() {
     const router = useRouter()
+    const params = useSearchParams()
+    const callback = params.get('callbackUrl') || '/'
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -21,15 +24,17 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match!");
+        toast.error("Passwords do not match!");
         return;
     }
     // console.log("Registration Data:", formData);
     const result = await postUser(formData)
     if(result.acknowledged){
-        alert("success")
+        toast.success("Account create successful")
         router.push('/login')
 
+    }else{
+        toast.error("Failed to create account. Try again.")
     }
   };
 

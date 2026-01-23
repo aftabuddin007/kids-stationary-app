@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaArrowRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc'; // Import Google Icon
 import { useRouter, useSearchParams } from "next/navigation";
-import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const params = useSearchParams();
@@ -21,21 +21,23 @@ export default function LoginPage() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+
     // console.log("Login Attempt:", formData);
     try{
  const result = await signIn("credentials",{email:formData.email,
       password:formData.password,
       name:formData.name,
-      // redirect:false,
+      redirect:false,
     callbackUrl:params.get('callbackUrl') || '/'
     })
     
     if(result?.ok) {
-      Swal.fire("Login", "", "successful")
+      toast.success("Login successful")
+      router.push(callback)
 
 
     }else{
-      Swal.fire("error","Email password not matched ","error")
+      toast.error("Email password not matched. Try again ")
     }
    
   

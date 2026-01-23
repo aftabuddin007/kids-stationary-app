@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import NextAuthProvider from "@/provider/NextAuthProvider";
+import { ToastContainer } from "react-toastify";
 
 
 const poppins = Poppins({
@@ -72,6 +73,7 @@ export default function RootLayout({ children }) {
 <main className="py-2 md:11/12 mx-auto min-h-[calc(100vh-302px)]">
 
         {children}
+        <ToastContainer position="top-center" autoClose={3000} />
 </main>
 
         <footer>
