@@ -3,6 +3,8 @@
 import { authOptions } from "@/lib/authOptions"
 import { ObjectId } from "mongodb"
 import { getServerSession } from "next-auth"
+import { revalidatePath } from "next/cache"
+import { cache } from "react"
 
 const { dbConnect, collections } = require("@/lib/dbConnect")
 
@@ -41,14 +43,14 @@ if(isAdded){
 }
 
 
-export const getCartData = async ()=>{
+export const getCartData = cache(async ()=>{
     const {user}=  (await getServerSession(authOptions))||{};
     if(!user)return [];
     const query = {email:user?.email};
     const result = await cartCollection.find(query).toArray()
-    return result;
+    return result
 
-}
+})
 
 export const deleteCartItem = async(id)=>{
     const {user}=  (await getServerSession(authOptions))||{};
@@ -59,6 +61,9 @@ export const deleteCartItem = async(id)=>{
     const query = {_id:new ObjectId(id)}
 
     const result = await cartCollection.deleteOne(query)
+    if(Boolean(result.deletedCount)){
+        revalidatePath('/cart')
+    }
     return {success:Boolean(result.deletedCount)}
 
 }
