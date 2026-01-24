@@ -38,3 +38,13 @@ if(isAdded){
 }
     return {success:true}
 }
+
+
+export const getCartData = async ()=>{
+    const {user}=  (await getServerSession(authOptions))||{};
+    if(!user)return [];
+    const query = {email:user?.email};
+    const result = await cartCollection.find(query).toArray()
+    return result;
+    
+}
