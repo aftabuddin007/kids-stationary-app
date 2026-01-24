@@ -1,8 +1,10 @@
 "use client";
+import { deleteCartItem } from "@/actins/server/cart";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
-export default function CartCard({ cartItem, onDelete }) {
+export default function CartCard({ cartItem }) {
   const [quantity, setQuantity] = useState(cartItem.quantity || 1);
 
   const handleIncrement = () => {
@@ -15,10 +17,35 @@ export default function CartCard({ cartItem, onDelete }) {
     }
   };
 
-  const handleDelete = () => {
-    if (confirm("Are you sure you want to remove this item from cart?")) {
-      onDelete(cartItem.productId);
+  const handleDelete = async () => {
+
+    Swal.fire({
+  title: "Are you sure ?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, remove it!"
+}).then(async(result) => {
+  if (result.isConfirmed) {
+    const result = await deleteCartItem(cartItem._id)
+    if(result.success){
+ Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+    }else{
+         Swal.fire({
+      title: "ops",
+      text: "Something went wrong.",
+      icon: "error"
+    });
     }
+   
+  }
+});
   };
 
   const totalPrice = (cartItem.price * quantity).toFixed(2);

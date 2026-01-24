@@ -13,7 +13,7 @@ const CartPage = async() => {
            <h2 className="text-3xl font-bold">My Cart</h2> 
             <div className="flex">
                 <div className="flex-3">`
-            {cart.map((cartItem)=>(<CartCard key={cartItem._id} cartItem={cartItem}></CartCard>))}
+            {cart.map((cartItem)=><CartCard key={cartItem._id} cartItem={cartItem}></CartCard>)}
 
 
                 </div>
