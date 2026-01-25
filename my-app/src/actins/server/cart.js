@@ -62,7 +62,7 @@ export const deleteCartItem = async(id)=>{
 
     const result = await cartCollection.deleteOne(query)
     if(Boolean(result.deletedCount)){
-        revalidatePath('/cart')
+        revalidatePath('/cart') 
     }
     return {success:Boolean(result.deletedCount)}
 
