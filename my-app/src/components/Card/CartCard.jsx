@@ -4,7 +4,7 @@ import { Trash2, Plus, Minus } from "lucide-react";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-export default function CartCard({ cartItem }) {
+export default function CartCard({ cartItem,removeItem }) {
   const [quantity, setQuantity] = useState(cartItem.quantity || 1);
 
   const handleIncrement = () => {
@@ -30,7 +30,9 @@ export default function CartCard({ cartItem }) {
 }).then(async(result) => {
   if (result.isConfirmed) {
     const result = await deleteCartItem(cartItem._id)
+    
     if(result.success){
+      removeItem(_id)
  Swal.fire({
       title: "Deleted!",
       text: "Your file has been deleted.",
