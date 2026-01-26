@@ -32,7 +32,7 @@ export default function CartCard({ cartItem,removeItem }) {
     const result = await deleteCartItem(cartItem._id)
     
     if(result.success){
-      removeItem(_id)
+      removeItem(cartItem._id)
  Swal.fire({
       title: "Deleted!",
       text: "Your file has been deleted.",

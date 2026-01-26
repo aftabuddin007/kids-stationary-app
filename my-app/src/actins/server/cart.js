@@ -21,7 +21,7 @@ const isAdded = await cartCollection.findOne(query)
 if(isAdded){
     const updatedData = {
         $inc:{
-            quantity:tnc?1:-1
+            quantity:tnc ? 1 : -1
         }
     };
     const result  = await cartCollection.updateOne(query,updatedData)
@@ -58,7 +58,9 @@ export const deleteCartItem = async(id)=>{
     if(id?.length !=24){
         return {success:false}
     }
-    const query = {_id:new ObjectId(id)}
+    const query = {_id:new ObjectId(id),
+        email:user.email,
+    }
 
     const result = await cartCollection.deleteOne(query)
     // if(Boolean(result.deletedCount)){
@@ -67,3 +69,7 @@ export const deleteCartItem = async(id)=>{
     return {success:Boolean(result.deletedCount)}
 
 }
+
+
+// increase
+const increa
