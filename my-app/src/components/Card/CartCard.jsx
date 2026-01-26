@@ -1,20 +1,32 @@
 "use client";
-import { deleteCartItem } from "@/actins/server/cart";
+import { decreaseItemDB, deleteCartItem, increaseItemDB } from "@/actins/server/cart";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-export default function CartCard({ cartItem,removeItem }) {
+export default function CartCard({updateQuantity, cartItem,removeItem }) {
   const [quantity, setQuantity] = useState(cartItem.quantity || 1);
+  const [loading,setLoading]=useState(false)
 
-  const handleIncrement = () => {
-    setQuantity(prev => prev + 1);
+  const handleIncrement = async() => {
+    setLoading(true)
+    const result = await increaseItemDB(cartItem._id,quantity)
+    if(result.success){
+      updateQuantity(cartItem._id,quantity+1)
+      toast('Item added successfully')
+    }
+    setLoading(false)
   };
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(prev => prev - 1);
+  const handleDecrement = async() => {
+    setLoading(true)
+    const result = await decreaseItemDB(cartItem._id,quantity)
+    if(result.success){
+      updateQuantity(cartItem._id,quantity-1)
+      toast('Item delete successfully')
     }
+    setLoading(false)
   };
 
   const handleDelete = async () => {
@@ -50,7 +62,7 @@ export default function CartCard({ cartItem,removeItem }) {
 });
   };
 
-  const totalPrice = (cartItem.price * quantity).toFixed(2);
+  const totalPrice = (cartItem.price * cartItem.quantity).toFixed(2);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
@@ -77,18 +89,20 @@ export default function CartCard({ cartItem,removeItem }) {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleDecrement}
-                      disabled={quantity <= 1}
+                      disabled={cartItem.quantity === 1 || loading}
                       className="w-7 h-7 flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
 
                     <span className="w-8 text-center font-semibold">
-                      {quantity}
+                      {cartItem.quantity}
                     </span>
 
                     <button
                       onClick={handleIncrement}
+                      disabled={cartItem.quantity === 10 || loading}
+
                       className="w-7 h-7 flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200"
                     >
                       <Plus className="w-3 h-3" />

@@ -72,4 +72,44 @@ export const deleteCartItem = async(id)=>{
 
 
 // increase
-const increa
+export const increaseItemDB = async(id,quantity)=>{
+     const {user}=  (await getServerSession(authOptions))||{};
+    if(!user)return {success:false}
+    if(quantity>10){
+      return  {success:false, message:"you can not buy more then 10 product at a time"}
+    }
+    const query = {_id:new ObjectId(id),
+        email:user.email,
+    }
+     const updatedData = {
+        $inc:{
+            quantity:1,
+        }
+    };
+    const result = await cartCollection.updateOne(query,updatedData)
+
+    return{success:Boolean(result.modifiedCount)}
+
+
+}
+// decrease
+export const decreaseItemDB = async(id,quantity)=>{
+     const {user}=  (await getServerSession(authOptions))||{};
+    if(!user)return {success:false}
+    if(quantity<=1){
+      return  {success:false, message:"quantity can not be empty"}
+    }
+    const query = {_id:new ObjectId(id),
+        email:user.email,
+    }
+     const updatedData = {
+        $inc:{
+            quantity:-1,
+        }
+    };
+    const result = await cartCollection.updateOne(query,updatedData)
+
+    return{success:Boolean(result.modifiedCount)}
+
+
+}
