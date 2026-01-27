@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import CartCard from "../Card/CartCard";
+import Link from "next/link";
 
 const CardSection = ({ cartItems = [] }) => {
   const [items, setItems] = useState(cartItems);
@@ -82,9 +83,13 @@ const CardSection = ({ cartItems = [] }) => {
                 <span>${totalPrices.toFixed(2)}</span>
               </div>
 
-              <button className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded-md font-semibold transition cursor-pointer">
+              <Link 
+              
+              href={'/checkout'}
+             disabled={!items.length}
+               className="w-full mt-4 btn bg-green-600 hover:bg-green-700 text-white py-2 rounded-md font-semibold transition cursor-pointer">
                 Confirm Order
-              </button>
+              </Link>
             </div>
           </div>
         </div>

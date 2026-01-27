@@ -30,7 +30,7 @@ export default function CartCard({updateQuantity, cartItem,removeItem }) {
   };
 
   const handleDelete = async () => {
-
+setLoading(true)
     Swal.fire({
   title: "Are you sure ?",
   text: "You won't be able to revert this!",
@@ -59,6 +59,7 @@ export default function CartCard({updateQuantity, cartItem,removeItem }) {
     }
    
   }
+  setLoading(false)
 });
   };
 

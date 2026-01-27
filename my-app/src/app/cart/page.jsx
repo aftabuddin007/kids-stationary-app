@@ -6,7 +6,8 @@ import React from 'react';
 
 const CartPage = async() => {
  const cartItems = await getCartData()
- const formattedItems = cartItems.map(item=>({...item ,_id:item._id.toString()}))
+ const formattedItems = cartItems.map(item=>({...item 
+    ,_id:item._id.toString()}))
 // console.log(formattedItems)
 
 
