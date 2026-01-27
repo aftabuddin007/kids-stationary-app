@@ -12,7 +12,7 @@ export const createOrder = async(payload)=>{
     if(!user) return{success:false}
 
     const cart = await getCartData();
-    if(!cart.length == 0) return {success:false,message:'Cart is empty'}
+    if(!cart.length === 0) return {success:false,message:'Cart is empty'}
 const newOrder = {
    
     createdAt:new Date().toISOString(),

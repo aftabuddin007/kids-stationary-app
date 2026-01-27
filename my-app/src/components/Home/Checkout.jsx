@@ -19,10 +19,7 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
     [items]
   );
 
-  // 🧾 Form State
-  
-
-  // ✏️ Handle input change
+ 
   
 if(session?.status === 'loading'){
     return <p>loading.......</p>
