@@ -2,7 +2,9 @@
 
 import { createOrder } from "@/actins/server/order";
 import { useSession } from "next-auth/react";
+import Error from "next/error";
 import { useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 const Checkout = ({ cartItems = [], summaryOnly = false }) => {
   const [items] = useState(cartItems);
@@ -18,39 +20,38 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
   );
 
   // 🧾 Form State
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    payment: "Cash on Delivery",
-  });
+  
 
   // ✏️ Handle input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  
 if(session?.status === 'loading'){
     return <p>loading.......</p>
 }
   // 🚀 Handle Order (PRINT VALUES)
-  const handleOrder = async(e) => {
-    e.preventDefault();
-    const form = e.target;
+ const handleOrder = async (e) => {
+  e.preventDefault();
+  const form = e.target;
 
-    const payload = {
-      name:form.name.value,
-      email:form.email.value,
-      phone:parseInt(form.phone.value),
-      payment:form.payment.value,
-      address:form.address.value,
-
-      totalPrice: totalPrices,
-    };
-    console.log("🛒 Order Data:", payload);
-    const result = await createOrder(payload)
+  const payload = {
+    name: form.name.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    payment: form.payment.value,
+    address: form.address.value,
+    totalPrice: totalPrices,
+    items,
+    totalItems,
   };
+
+  const result = await createOrder(payload);
+
+  if (result.success) {
+    toast.success("Order placed successfully 🎉");
+  } else {
+    toast.error("Database error ❌");
+  }
+};
+
 
   // ---------------- SUMMARY ----------------
   if (summaryOnly) {
