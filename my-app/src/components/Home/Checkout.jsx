@@ -1,11 +1,12 @@
 "use client";
 
+import { createOrder } from "@/actins/server/order";
+import { useSession } from "next-auth/react";
 import { useMemo, useState } from "react";
 
 const Checkout = ({ cartItems = [], summaryOnly = false }) => {
   const [items] = useState(cartItems);
-
-  // 🧮 Totals Calculation
+    const session = useSession()
   const totalItems = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),
     [items]
@@ -25,48 +26,33 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
     payment: "Cash on Delivery",
   });
 
-  // ✏️ Handle Input Change
+  // ✏️ Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  // 🚀 Submit Order
-  const handleSubmit = async (e) => {
+if(session?.status === 'loading'){
+    return <p>loading.......</p>
+}
+  // 🚀 Handle Order (PRINT VALUES)
+  const handleOrder = async(e) => {
     e.preventDefault();
+    const form = e.target;
 
-    if (!items.length) return alert("Cart is empty");
+    const payload = {
+      name:form.name.value,
+      email:form.email.value,
+      phone:parseInt(form.phone.value),
+      payment:form.payment.value,
+      address:form.address.value,
 
-    const orderData = {
-      customer: formData,
-      items,
-      totalItems,
       totalPrice: totalPrices,
-      status: "pending",
-      createdAt: new Date(),
     };
-
-    try {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        alert("Order placed successfully 🎉");
-      } else {
-        alert("Something went wrong");
-      }
-    } catch (error) {
-      console.log(error);
-      alert("Server error");
-    }
+    console.log("🛒 Order Data:", payload);
+    const result = await createOrder(payload)
   };
 
-  // ================= SUMMARY (RIGHT SIDE) =================
+  // ---------------- SUMMARY ----------------
   if (summaryOnly) {
     return (
       <div className="bg-white shadow-xl rounded-lg p-6 sticky top-5">
@@ -108,21 +94,22 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
     );
   }
 
-  // ================= CHECKOUT FORM (LEFT SIDE) =================
+  // ---------------- CHECKOUT FORM ----------------
   return (
     <div className="bg-white shadow-xl rounded-lg p-8">
       <h2 className="text-2xl font-bold mb-6 border-b pb-2">Billing Details</h2>
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
+      <form className="space-y-4" onSubmit={handleOrder}>
         <div>
           <label className="block text-sm font-semibold mb-1">Full Name</label>
           <input
             type="text"
             name="name"
-            value={formData.name}
-            onChange={handleChange}
+            value={session?.data?.user?.name}
+           
             className="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500"
             required
+            readOnly
           />
         </div>
 
@@ -131,20 +118,20 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
           <input
             type="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={session?.data?.user?.email}
+            
             className="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500"
             required
+            readOnly
           />
         </div>
 
         <div>
           <label className="block text-sm font-semibold mb-1">Phone</label>
           <input
-            type="text"
+            type="number"
             name="phone"
-            value={formData.phone}
-            onChange={handleChange}
+            
             className="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500"
             required
           />
@@ -154,8 +141,7 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
           <label className="block text-sm font-semibold mb-1">Address</label>
           <textarea
             name="address"
-            value={formData.address}
-            onChange={handleChange}
+            
             rows="3"
             className="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500"
             required
@@ -168,8 +154,7 @@ const Checkout = ({ cartItems = [], summaryOnly = false }) => {
           </label>
           <select
             name="payment"
-            value={formData.payment}
-            onChange={handleChange}
+            
             className="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500"
           >
             <option>Cash on Delivery</option>
