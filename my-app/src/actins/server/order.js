@@ -21,16 +21,15 @@ const newOrder = {
 
 
 }
-    const result =await orderCollection.insertOne(newOrder)
-    if(Boolean(result.insertedId)){
-        const result = await clearCart()
-    }
+   const insertResult = await orderCollection.insertOne(newOrder);
+
+  if (insertResult.insertedId) {
+    await clearCart();
+    return { success: true, orderId: insertResult.insertedId };
+  }
+
+  return { success: false };
+};
 
 
-    if(result.insertedId){
-        return {success:true,orderId:result.insertedId}
-    }
 
-
-
-}
