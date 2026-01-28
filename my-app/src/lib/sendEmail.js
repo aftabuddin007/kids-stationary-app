@@ -22,7 +22,7 @@ export const sendInvoiceEmail = async ({ userEmail, orderId, items, total, name 
     .join("");
 
   const mailOptions = {
-    from: `"Your Store" <${process.env.EMAIL_USER}>`,
+    from: `"KidsStationary" <${process.env.EMAIL_USER}>`,
     to: userEmail,
     subject: `🧾 Order Invoice - #${orderId}`,
     html: `

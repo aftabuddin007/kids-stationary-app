@@ -3,6 +3,7 @@
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { clearCart, getCartData } from "./cart";
+import { sendInvoiceEmail } from "@/lib/sendEmail";
 
 const { dbConnect, collections } = require("@/lib/dbConnect");
 
@@ -21,12 +22,26 @@ const newOrder = {
 
 
 }
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
    const insertResult = await orderCollection.insertOne(newOrder);
 
   if (insertResult.insertedId) {
     await clearCart();
     return { success: true, orderId: insertResult.insertedId };
   }
+   await sendInvoiceEmail({
+      userEmail: user.email,
+      orderId: insertResult.insertedId.toString(),
+      items: cart,
+      total,
+      name: user.name || "Customer",
+    });
+
+    return { success: true, orderId: result.insertedId };
+
+
+
 
   return { success: false };
 };
