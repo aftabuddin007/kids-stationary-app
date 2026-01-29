@@ -22,8 +22,8 @@ export const sendInvoiceEmail = async ({ userEmail, orderId, items, total, name 
     .join("");
 
   const mailOptions = {
-    from: `"KidsStationary" <${process.env.EMAIL_USER}>`,
-    to: userEmail,
+    from: `${process.env.EMAIL_USER}`,
+    to: "aftabhasan7856@gmail.com",
     subject: `🧾 Order Invoice - #${orderId}`,
     html: `
       <div style="font-family: Arial; padding:20px">
@@ -45,5 +45,6 @@ export const sendInvoiceEmail = async ({ userEmail, orderId, items, total, name 
     `,
   };
 
-  await transporter.sendMail(mailOptions);
+const result = await transporter.sendMail(mailOptions);
+console.log("result",result)
 };
