@@ -87,7 +87,7 @@ const CardSection = ({ cartItems = [] }) => {
               
               href={'/checkout'}
              disabled={!items.length}
-               className="w-full mt-4 btn bg-green-600 hover:bg-green-700 text-white py-2 rounded-md font-semibold transition cursor-pointer">
+               className="w-full mt-4 btn bg-green-600 hover:bg-green-700 p-4 text-white py-2 rounded-md font-semibold transition cursor-pointer">
                 Confirm Order
               </Link>
             </div>
