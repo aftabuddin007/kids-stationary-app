@@ -78,7 +78,7 @@ const CardSection = ({ cartItems = [] }) => {
                 <span>{totalItems}</span>
               </div>
 
-              <div className="flex justify-between text-lg font-bold">
+              <div className="flex justify-between text-lg font-bold m-3">
                 <span>Total Price</span>
                 <span>${totalPrices.toFixed(2)}</span>
               </div>
